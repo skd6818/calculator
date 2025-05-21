@@ -1,0 +1,96 @@
+
+
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B2B & B2C Rate Calculator</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#28a745" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="section">
+      <h2>B2B RATE</h2>
+      <input type="number" id="b2bRate" placeholder="B2B Rate (per day)">
+      <input type="number" id="b2bDays" placeholder="Number of Days">
+      <input type="number" id="b2bPersons" placeholder="Number of Persons">
+      <input type="number" id="b2bTotal" placeholder="Total Expense" readonly>
+      <button onclick="calculateB2B()">Calculate B2B Total</button>
+    </div><div class="section">
+  <h2>B2C RATE</h2>
+  <input type="number" id="b2cRate" placeholder="B2C Rate (per day)">
+  <input type="number" id="b2cDays" placeholder="Number of Days">
+  <input type="number" id="b2cPersons" placeholder="Number of Persons">
+  <input type="number" id="b2cTotal" placeholder="Total Expense" readonly>
+  <input type="number" id="profit" placeholder="Profit in Rupees" readonly>
+  <button onclick="calculateB2C()">Calculate B2C Total & Profit</button>
+</div>
+
+  </div>  <script>
+    function calculateB2B() {
+      const rate = parseFloat(document.getElementById("b2bRate").value) || 0;
+      const days = parseFloat(document.getElementById("b2bDays").value) || 0;
+      const persons = parseFloat(document.getElementById("b2bPersons").value) || 0;
+      const total = rate * days * persons;
+      document.getElementById("b2bTotal").value = total.toFixed(2);
+    }
+
+    function calculateB2C() {
+      const rate = parseFloat(document.getElementById("b2cRate").value) || 0;
+      const days = parseFloat(document.getElementById("b2cDays").value) || 0;
+      const persons = parseFloat(document.getElementById("b2cPersons").value) || 0;
+      const total = rate * days * persons;
+      document.getElementById("b2cTotal").value = total.toFixed(2);
+
+      const b2bTotal = parseFloat(document.getElementById("b2bTotal").value) || 0;
+      const profit = total - b2bTotal;
+      document.getElementById("profit").value = profit.toFixed(2);
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker Registered'));
+    }
+  </script></body>
+</html>
